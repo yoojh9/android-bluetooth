@@ -2,7 +2,7 @@ package com.example.android.bluetooth_prototype.model;
 
 
 public class TemperatureData {
-    private String date;
+    private String dateTime;
     private double currentTemp;
     private double refTemp;
     private String mode;
@@ -12,8 +12,8 @@ public class TemperatureData {
         this.currentTemp = currentTemp;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public void setMode(String mode) {
@@ -32,8 +32,8 @@ public class TemperatureData {
         return refTemp;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateTime() {
+        return dateTime;
     }
 
     public String getMode() {

@@ -10,11 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.android.bluetooth_prototype.bluetooth.BluetoothService;
+import com.example.android.bluetooth_prototype.bluetooth.BluetoothManager;
 
 public class BluetoothBaseActivity extends AppCompatActivity implements Handler.Callback{
 
-    private static BluetoothService bluetoothService;
+    private static BluetoothManager bluetoothService;
 
     protected boolean preventCancel;
 
@@ -23,7 +23,7 @@ public class BluetoothBaseActivity extends AppCompatActivity implements Handler.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bluetoothService = (BluetoothService) getApplicationContext();
+        bluetoothService = (BluetoothManager) getApplicationContext();
     }
 
     protected boolean write(String message){
@@ -37,10 +37,10 @@ public class BluetoothBaseActivity extends AppCompatActivity implements Handler.
     @Override
     public boolean handleMessage(@NonNull Message message) {
         switch (message.what){
-            case BluetoothService.MSG_OK:
+            case BluetoothManager.MSG_OK:
                 break;
-            case BluetoothService.MSG_CANCEL:
-                setResult(BluetoothService.MSG_CANCEL, new Intent());
+            case BluetoothManager.MSG_CANCEL:
+                setResult(BluetoothManager.MSG_CANCEL, new Intent());
                 finish();
                 break;
         }
@@ -72,7 +72,7 @@ public class BluetoothBaseActivity extends AppCompatActivity implements Handler.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setResult(BluetoothService.MSG_OK, new Intent());
+        setResult(BluetoothManager.MSG_OK, new Intent());
         finish();
     }
 
@@ -85,7 +85,7 @@ public class BluetoothBaseActivity extends AppCompatActivity implements Handler.
     @Override
     protected void onPause() {
         if(!preventCancel){
-            Message.obtain(new Handler(this), BluetoothService.MSG_CANCEL).sendToTarget();
+            Message.obtain(new Handler(this), BluetoothManager.MSG_CANCEL).sendToTarget();
         }
         super.onPause();
     }

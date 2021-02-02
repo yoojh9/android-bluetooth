@@ -13,8 +13,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-public class BluetoothService extends Application {
-    private static final String TAG = "BLUETOOTH_SERVICE";
+public class BluetoothManager extends Application {
+    private static final String TAG = "BLUETOOTH_MANAGER";
     private Handler handler; // handler that gets info from Bluetooth service
     private ConnectThread connectThread;
 
@@ -32,7 +32,7 @@ public class BluetoothService extends Application {
 
     private boolean stoppingConnection;
 
-    public BluetoothService(){
+    public BluetoothManager(){
         this.state = STATE_NONE;
         this.handler = null;
     }

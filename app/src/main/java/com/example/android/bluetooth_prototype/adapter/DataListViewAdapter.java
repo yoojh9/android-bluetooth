@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.android.bluetooth_prototype.R;
 import com.example.android.bluetooth_prototype.model.TemperatureData;
+import com.example.android.bluetooth_prototype.util.DateUtil;
 
 import org.w3c.dom.Text;
 
@@ -19,11 +20,8 @@ public class DataListViewAdapter extends BaseAdapter {
 
     private List<TemperatureData> dataList;
 
-    private LayoutInflater mInflater;
-
-    public DataListViewAdapter(Context context, List<TemperatureData> dataList){
+    public DataListViewAdapter(List<TemperatureData> dataList){
         this.dataList = dataList;
-        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -42,10 +40,12 @@ public class DataListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(int i, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
+        final Context context = parent.getContext();
         if(convertView == null){
-            convertView = mInflater.inflate(R.layout.data_item, null);
+            LayoutInflater inflter = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflter.inflate(R.layout.data_item, null);
             viewHolder = new ViewHolder();
             viewHolder.tvTempData = (TextView) convertView.findViewById(R.id.tvTempData);
             convertView.setTag(viewHolder);
@@ -55,7 +55,7 @@ public class DataListViewAdapter extends BaseAdapter {
 
         TemperatureData temperatureData = dataList.get(i);
 
-        viewHolder.tvTempData.setText("날짜:" + temperatureData.getDate() +" 현재온도: " + temperatureData.getCurrentTemp() + " 설정온도: " + temperatureData.getRefTemp());
+        viewHolder.tvTempData.setText("날짜:" + temperatureData.getDateTime() +" 현재온도: " + temperatureData.getCurrentTemp() + " 설정온도: " + temperatureData.getRefTemp());
         return convertView;
     }
 

@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 import com.example.android.bluetooth_prototype.adapter.BTDeviceListAdapter;
 import com.example.android.bluetooth_prototype.bluetooth.BTDevice;
-import com.example.android.bluetooth_prototype.bluetooth.BluetoothService;
+import com.example.android.bluetooth_prototype.bluetooth.BluetoothManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ import java.util.Set;
 public class BluetoothDeviceListActivity extends AppCompatActivity implements Handler.Callback{
 
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothService bluetoothService;
+    private BluetoothManager bluetoothService;
     private static final String TAG = "DEVICE_SELECT";
     private static final int REQUEST_ENABLE_BT = 1;
     private List<BTDevice> btPairedDevices = new ArrayList<BTDevice>();
@@ -54,7 +54,7 @@ public class BluetoothDeviceListActivity extends AppCompatActivity implements Ha
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bt_device_list);
 
-        bluetoothService = (BluetoothService) getApplicationContext();
+        bluetoothService = (BluetoothManager) getApplicationContext();
         // 기존 페어링 된 기기 리스트
         pairedListView = (ListView) findViewById(R.id.lvPairedDevices);
         btPairedListAdapter = new BTDeviceListAdapter(this, btPairedDevices);
@@ -214,13 +214,13 @@ public class BluetoothDeviceListActivity extends AppCompatActivity implements Ha
     @Override
     public boolean handleMessage(@NonNull Message message) {
         switch(message.what) {
-            case BluetoothService.MSG_OK : break;
-            case BluetoothService.MSG_CANCEL:
+            case BluetoothManager.MSG_OK : break;
+            case BluetoothManager.MSG_CANCEL:
                 if(message.obj != null){
-                    Toast.makeText(this, (String)message.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "블루투스가 활성화 되어 있는지 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case BluetoothService.MSG_CONNECTED:
+            case BluetoothManager.MSG_CONNECTED:
                 Log.e(TAG, "BLUETOOTH CONNECT");
                 startActivityForResult(new Intent(getApplicationContext(), MainActivity.class), ACTION_LIST);
                 break;

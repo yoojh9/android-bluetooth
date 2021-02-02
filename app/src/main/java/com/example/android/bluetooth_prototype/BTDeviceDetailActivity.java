@@ -1,15 +1,12 @@
 package com.example.android.bluetooth_prototype;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.android.bluetooth_prototype.bluetooth.BluetoothService;
+import com.example.android.bluetooth_prototype.bluetooth.BluetoothManager;
 import com.example.android.bluetooth_prototype.db.Temperature;
 import com.example.android.bluetooth_prototype.db.TemperatureProvider;
 import com.example.android.bluetooth_prototype.util.DateUtil;
@@ -27,11 +24,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import java.net.URI;
 import java.util.Date;
 
 public class BTDeviceDetailActivity extends BluetoothBaseActivity {
@@ -89,7 +83,7 @@ public class BTDeviceDetailActivity extends BluetoothBaseActivity {
     @Override
     public boolean handleMessage(@NonNull Message message) {
 
-        if(message.what == BluetoothService.MSG_READ) {
+        if(message.what == BluetoothManager.MSG_READ) {
             byte[] data = (byte[])message.obj;
             Log.e(TAG, ""+data[0]+" "+data[1]+" "+data[2]+ " " + data[3] + " "+ data[4]);
             int currentTempVal = data[1] - 90;
@@ -168,7 +162,7 @@ public class BTDeviceDetailActivity extends BluetoothBaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 disconnect();
-                BTDeviceDetailActivity.super.onBackPressed();
+                BTDeviceDetailActivity.super.disconnect();
             }
         });
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {

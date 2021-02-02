@@ -6,6 +6,16 @@ import java.util.Locale;
 
 public class DateUtil {
 
+    public static String dateTimeForamt(long datetime){
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+            return simpleDateFormat.format(new Date(datetime));
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String dateToDateString(Date date){
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
@@ -15,4 +25,5 @@ public class DateUtil {
         }
         return null;
     }
+
 }
